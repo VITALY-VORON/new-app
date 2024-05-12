@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './infrastructure/modules/user.module';
 import { TypeOrmComponent } from './infrastructure/db/conect';
 import { TaskModule } from './infrastructure/modules/task.module';
+import { AuthModule } from './infrastructure/modules/auth.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { TaskModule } from './infrastructure/modules/task.module';
     }),
     TypeOrmComponent,
     UserModule,
-    TaskModule
+    TaskModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

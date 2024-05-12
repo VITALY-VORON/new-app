@@ -23,9 +23,6 @@ export class UserController {
             }
         }
     })
-    async createUser(@Body() data: ICreateUserDto) {
-        await this.userService.createUser(data);
-    }
 
     @Post('signin')
     @ApiBody({
@@ -36,9 +33,6 @@ export class UserController {
             }
         }
     })
-    async signIn(@Body() data: IUserEntity) {
-        return this.userService.signIn(data)
-    }
 
     @Get('getUser/:id')
     async findById(@Param('id') id: string) {
