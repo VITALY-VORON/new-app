@@ -1,0 +1,63 @@
+import { ConfigService } from "@nestjs/config";
+import { AppModule } from "src/app.module";
+import { INestApplication, ValidationPipe, VersioningType } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+export class App {
+    private readonly app: INestApplication;
+    private readonly apiPort: number;
+    private readonly apiVersion: string;
+    private readonly apiPrefix: string;
+    private readonly swaggerTitle: string;
+    private readonly swaggerDescription: string;
+    private readonly swaggerPath: string;
+    private readonly configService: ConfigService;
+
+    constructor(app: INestApplication) {
+        this.app = app;
+        this.configService = app.get(ConfigService);
+        this.apiPort = this.configService.getOrThrow<number>('API_PORT');
+        this.apiVersion = this.configService.getOrThrow<string>('API_VERSION');
+        this.apiPrefix = this.configService.getOrThrow<string>('API_PREFIX');
+        this.swaggerTitle = this.configService.getOrThrow<string>('SWAGGER_TITLE');
+        this.swaggerDescription = this.configService.getOrThrow<string>('SWAGGER_DESCRIPTION');
+        this.swaggerPath = this.configService.getOrThrow<string>('SWAGGER_PATH');
+    }
+
+    private appConfig() {
+        this.app.setGlobalPrefix(this.apiPrefix);
+        this.app.enableVersioning({ defaultVersion: this.apiVersion, type: VersioningType.URI });
+        return this;
+    }
+
+    private swaggerConfig() {
+        const options = new DocumentBuilder()
+           .setTitle(this.swaggerTitle)
+           .setDescription(this.swaggerDescription)
+           .setVersion(this.apiVersion)
+           .build();
+        const document = SwaggerModule.createDocument(this.app, options);
+        SwaggerModule.setup(`${this.apiPrefix}/:version/${this.swaggerPath}`, this.app, document);
+        return this;
+    }
+
+    private validationConfig() {
+        this.app.useGlobalPipes(new ValidationPipe({
+            transform: true,
+            whitelist: true
+        }));
+        return this;
+    }
+
+    private async runApp() {
+        await this.app.listen(this.apiPort);
+        return this;
+    }
+
+    public static async run() {
+        NestFactory.create(AppModule).then(app => {
+            new App(app).appConfig().swaggerConfig().validationConfig().runApp()
+        })
+    }
+}
