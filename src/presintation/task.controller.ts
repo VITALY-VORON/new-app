@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post } from "@nestjs/common";
-import { ApiConsumes, ApiBody } from "@nestjs/swagger";
-import { ICreateTaskDto } from "src/use-cases/task/dto/create.task.interface.dto";
-import { ITaskService } from "src/use-cases/task/service/task.servicce.interface";
+import { ApiConsumes, ApiBody, ApiTags } from "@nestjs/swagger";
+import { ICreateTaskDto } from "src/use-cases/task/interface/dto/create.task.interface.dto";
+import { ITaskService } from "src/use-cases/task/interface/service/task.service.interface";
 
 @Controller('task')
+@ApiTags('Task')
 export class TaskController {
     constructor(
         @Inject('taskService')

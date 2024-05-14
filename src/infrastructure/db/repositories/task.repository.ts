@@ -1,8 +1,8 @@
-import { ICreateTaskDto } from "src/use-cases/task/dto/create.task.interface.dto";
+import { ICreateTaskDto } from "src/use-cases/task/interface/dto/create.task.interface.dto";
 import { TaskEntity } from "../entities/task.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { ITaskRepository } from "src/use-cases/task/repository/task.repository.interface";
+import { ITaskRepository } from "src/use-cases/task/interface/repository/task.repository.interface";
 
 export class TaskRepository implements ITaskRepository {
 

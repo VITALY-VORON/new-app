@@ -1,28 +1,45 @@
-import { Controller, Post, UseGuards, Request, Body, Inject } from '@nestjs/common';
-import { ApiBody } from '@nestjs/swagger';
-import { LocalAuthGuard } from 'src/infrastructure/JWT/guards/local.guard';
-import { AuthService } from 'src/use-cases/auth/service/auth.service';
-import { CreateUserDto } from './dto/user/create.user.dto';
-import { IUserEntity } from 'src/entiies/user/interface/user.entity.interface';
-import { ICreateUserDto } from 'src/use-cases/user/interface/dto/create.user.dto.interface';
-import { IAuthService } from 'src/use-cases/auth/interface/service/auth.service.interface';
+import { Body, Controller, Inject, Post, UseGuards } from "@nestjs/common";
+import { IAuthService } from "src/use-cases/auth/interface/service/auth.service.interface";
+import { ApiBody } from "@nestjs/swagger";
+import { ICreateUserDto } from "src/use-cases/user/interface/dto/create.user.dto.interface";
+import { LocalAuthGuard } from "src/infrastructure/JWT/guards/local.guard";
+import { CreateUserDto } from "./dto/user/create.user.dto";
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    @Inject('authService')
-    private readonly authService: IAuthService
-) {}
+    constructor(
+        @Inject('authService')
+        private readonly authService: IAuthService,
+    ) { }
 
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  @ApiBody({ type: CreateUserDto })
-  async login(@Request() req) {
-    return this.authService.login(req.user as IUserEntity);
-  }
+    @Post('sign-up')
+    @ApiBody({
+        schema: {
+            properties: {
+                email: { type: 'string', default: "test@test.com" },
+                password: { type: 'string', default: "12345678" },
+                name: { type: 'string', default: "John Doe" }
+            }
+        }
+    }
+    )
+    async signUp(@Body() data: ICreateUserDto) {
+        return this.authService.signUp(data);
+    }
 
-  @Post('/register')
-  register(@Body() dto: ICreateUserDto) {
-    return this.authService.register(dto);
-  }
+    @UseGuards(LocalAuthGuard)
+    @Post('sign-in')
+    @ApiBody(
+        {
+            schema: {
+                properties: {
+                    email: { type:'string', default: "test@test.com" },
+                    password: { type:'string', default: "12345678" }
+                }
+            }
+        }
+    )
+    async login(@Body() data: CreateUserDto) {
+      return this.authService.signIn(data);
+    }
 }

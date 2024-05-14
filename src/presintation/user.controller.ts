@@ -1,8 +1,6 @@
-import { Body, Controller, Get, Inject, Param, Post } from "@nestjs/common";
+import { Controller, Get, Inject, Param, Post } from "@nestjs/common";
 import { IUserService } from "src/use-cases/user/interface/service/user.service.interface";
 import { ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
-import { ICreateUserDto } from "src/use-cases/user/interface/dto/create.user.dto.interface";
-import { IUserEntity } from "src/entiies/user/interface/user.entity.interface";
 
 @Controller('user')
 @ApiTags('User')
@@ -11,28 +9,6 @@ export class UserController {
         @Inject('userService')
         private readonly userService: IUserService
     ) { }
-
-    @Post('signup')
-    @ApiConsumes('application/json')
-    @ApiBody({
-        schema: {
-            properties: {
-                email: { type:'string', default: "test@test.com" },
-                password: { type:'string', default: "12345678" },
-                name: { type:'string', default: "John Doe" }
-            }
-        }
-    })
-
-    @Post('signin')
-    @ApiBody({
-        schema: {
-            properties: {
-                email: { type:'string', default: "test@test.com" },
-                password: { type:'string', default: "12345678"}
-            }
-        }
-    })
 
     @Get('getUser/:id')
     async findById(@Param('id') id: string) {

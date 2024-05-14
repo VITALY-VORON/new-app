@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ITaskService } from "./service/task.servicce.interface";
+import { ITaskService } from "./interface/service/task.service.interface";
 import { TaskEntity } from "src/infrastructure/db/entities/task.entity";
-import { ICreateTaskDto } from "./dto/create.task.interface.dto";
-import { ITaskRepository } from "./repository/task.repository.interface";
+import { ICreateTaskDto } from "./interface/dto/create.task.interface.dto";
+import { ITaskRepository } from "./interface/repository/task.repository.interface";
 
 @Injectable()
 export class TaskService implements ITaskService {
