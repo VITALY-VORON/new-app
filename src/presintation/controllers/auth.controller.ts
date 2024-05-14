@@ -1,11 +1,12 @@
 import { Body, Controller, Inject, Post, UseGuards } from "@nestjs/common";
 import { IAuthService } from "src/use-cases/auth/interface/service/auth.service.interface";
-import { ApiBody } from "@nestjs/swagger";
+import { ApiBody, ApiTags } from "@nestjs/swagger";
 import { ICreateUserDto } from "src/use-cases/user/interface/dto/create.user.dto.interface";
 import { LocalAuthGuard } from "src/infrastructure/JWT/guards/local.guard";
-import { CreateUserDto } from "./dto/user/create.user.dto";
+import { CreateUserDto } from "../dto/user/create.user.dto";
 
 @Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
     constructor(
         @Inject('authService')

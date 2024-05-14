@@ -28,17 +28,19 @@ export class App {
     private appConfig() {
         this.app.setGlobalPrefix(this.apiPrefix);
         this.app.enableVersioning({ defaultVersion: this.apiVersion, type: VersioningType.URI });
+        this.app.enableCors({ credentials: true, origin: true });
         return this;
     }
 
     private swaggerConfig() {
         const options = new DocumentBuilder()
-           .setTitle(this.swaggerTitle)
-           .setDescription(this.swaggerDescription)
-           .setVersion(this.apiVersion)
-           .build();
+            .setTitle(this.swaggerTitle)
+            .setDescription(this.swaggerDescription)
+            .setVersion(this.apiVersion)
+            .addBearerAuth()
+            .build();
         const document = SwaggerModule.createDocument(this.app, options);
-        SwaggerModule.setup(`${this.apiPrefix}/:version/${this.swaggerPath}`, this.app, document);
+        SwaggerModule.setup(`${this.apiPrefix}/:version/${this.swaggerPath}`, this.app, document, { swaggerOptions: { persistAuthorization: true } });
         return this;
     }
 
@@ -56,7 +58,7 @@ export class App {
     }
 
     public static async run() {
-        NestFactory.create(AppModule).then(app => {
+        NestFactory.create(AppModule, { cors: false }).then(app => {
             new App(app).appConfig().swaggerConfig().validationConfig().runApp()
         })
     }

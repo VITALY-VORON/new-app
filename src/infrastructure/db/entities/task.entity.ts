@@ -1,5 +1,6 @@
 import { IsNotEmpty } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from "./user.entity";
 
 @Entity()
 export class TaskEntity {
@@ -17,4 +18,7 @@ export class TaskEntity {
     @Column('varchar')
     @IsNotEmpty()
     description: string;
+
+    @ManyToOne(() => UserEntity, (user) => user.tasks)
+    user: UserEntity;
 }

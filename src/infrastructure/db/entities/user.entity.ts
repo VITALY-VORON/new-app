@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { TaskEntity } from "./task.entity";
 
 @Entity()
 export class UserEntity {
@@ -19,4 +20,7 @@ export class UserEntity {
     @Column('varchar')
     @IsNotEmpty()
     name: string;
+
+    @OneToMany(() => TaskEntity, (task) => task.user)
+    tasks: TaskEntity[];
 }

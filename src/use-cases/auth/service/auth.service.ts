@@ -1,9 +1,10 @@
 import { CreateUserDto } from "src/presintation/dto/user/create.user.dto";
-import { IAuthService } from "./interface/service/auth.service.interface";
+import { IAuthService } from "../interface/service/auth.service.interface";
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
-import { IUserService } from "../user/interface/service/user.service.interface";
+import { IUserService } from "../../user/interface/service/user.service.interface";
 import { JwtService } from "@nestjs/jwt";
 import { UserEntity } from "src/infrastructure/db/entities/user.entity";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthServidce implements IAuthService {
@@ -21,7 +22,9 @@ export class AuthServidce implements IAuthService {
     }> {
         const user = await this.userService.findByEmail(email);
 
-        if (user && user.password === password) {
+        const pass = bcrypt.compareSync(password, user.password)
+
+        if (user && pass) {
             const { password, ...result } = user;
             return result;
         }
@@ -42,7 +45,6 @@ export class AuthServidce implements IAuthService {
                 token: this.jwtService.sign({ id: userData.id }),
             };
         } catch (err) {
-            console.log(err);
             throw new ForbiddenException('Ошибка при регистрации');
         }
     }

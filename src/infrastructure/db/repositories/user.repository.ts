@@ -24,8 +24,7 @@ export class UserRepository implements IUserRepository {
 
     async findById(id: string): Promise<IUserEntity> {
         try {
-            const user = this.userRepository.findOneBy({id})
-            return user;
+            return this.userRepository.findOneBy({id})
         } catch (error) {
             throw new Error("User not found")
         }
@@ -33,8 +32,7 @@ export class UserRepository implements IUserRepository {
 
     findByEmail(email: string): Promise<IUserEntity> {
         try {
-            const user = this.userRepository.findOneBy({email})
-            return user;
+            return this.userRepository.findOneBy({email})
         } catch (error) {
             throw new Error("User not found")
         }

@@ -10,13 +10,21 @@ export class TaskRepository implements ITaskRepository {
         @InjectRepository(TaskEntity)
         private readonly taskRepository: Repository<TaskEntity>
     ) { }
-
+    
     async createTask(data: ICreateTaskDto): Promise<TaskEntity> {
         try {
             const task = this.taskRepository.create(data);
             return await this.taskRepository.save(task);
         } catch (error) {
             throw new Error(error);
+        }
+    }
+
+    async getAllTasks(userId: string): Promise<TaskEntity[]> {
+        try {
+            return await this.taskRepository.find({ where: { userId: userId } });
+        } catch (error) {
+            
         }
     }
 
