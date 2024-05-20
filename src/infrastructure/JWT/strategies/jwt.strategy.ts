@@ -7,7 +7,7 @@ import { IUserService } from 'src/use-cases/user/interface/service/user.service.
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @Inject('userService')
-    private readonly userService: IUserService
+    private readonly userService: IUserService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

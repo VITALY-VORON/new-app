@@ -1,3 +1,2 @@
-import { App } from "./infrastructure/app";
-
+import { App } from './infrastructure/app';
 (async () => App.run())();

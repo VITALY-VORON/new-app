@@ -1,6 +1,7 @@
 export interface ICreateTaskDto {
-    id?: string;
-    title: string;
-    description: string;
-    stage: string;
+  id?: string;
+  groupId?: string;
+  title: string;
+  description: string;
+  stage: string;
 }

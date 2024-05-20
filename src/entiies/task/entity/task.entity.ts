@@ -1,17 +1,17 @@
-import { ITaskEntity } from "../interface/task.entity.interface";
-import { TTaskEntity } from "../type/task.entity.type";
+import { ITaskEntity } from '../interface/task.entity.interface';
+import { TTaskEntity } from '../type/task.entity.type';
 
 export class TaskEntity implements ITaskEntity {
-    id?: string;
-    userId: string;
-    title: string;
-    description: string;
-    stage: string;
-    constructor(data: TTaskEntity) {
-        this.id = data.id;
-        this.userId = data.userId;
-        this.title = data.title;
-        this.description = data.description;
-        this.stage = data.stage;
-    }
+  id?: string;
+  userId: string;
+  title: string;
+  description: string;
+  stage: string;
+  constructor(data: TTaskEntity) {
+    this.id = data.id;
+    this.userId = data.userId;
+    this.title = data.title;
+    this.description = data.description;
+    this.stage = data.stage;
+  }
 }

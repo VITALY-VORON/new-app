@@ -7,7 +7,7 @@ import { IAuthService } from 'src/use-cases/auth/interface/service/auth.service.
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
     @Inject('authService')
-    private authService: IAuthService
+    private authService: IAuthService,
   ) {
     super({
       usernameField: 'email',

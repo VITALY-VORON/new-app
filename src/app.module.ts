@@ -4,6 +4,7 @@ import { UserModule } from './infrastructure/modules/user.module';
 import { TypeOrmComponent } from './infrastructure/db/conect';
 import { TaskModule } from './infrastructure/modules/task.module';
 import { AuthModule } from './infrastructure/modules/auth.module';
+import { GroupModule } from './infrastructure/modules/group.module';
 
 @Module({
   imports: [
@@ -13,9 +14,10 @@ import { AuthModule } from './infrastructure/modules/auth.module';
     TypeOrmComponent,
     UserModule,
     TaskModule,
-    AuthModule
+    AuthModule,
+    GroupModule
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
