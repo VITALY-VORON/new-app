@@ -6,10 +6,12 @@ export class TaskEntity implements ITaskEntity {
     userId: string;
     title: string;
     description: string;
+    stage: string;
     constructor(data: TTaskEntity) {
         this.id = data.id;
         this.userId = data.userId;
         this.title = data.title;
         this.description = data.description;
+        this.stage = data.stage;
     }
 }

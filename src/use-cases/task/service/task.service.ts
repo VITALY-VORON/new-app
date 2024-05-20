@@ -20,6 +20,7 @@ export class TaskService implements ITaskService {
                 userId: { id: userId },
                 title: data.title,
                 description: data.description,
+                stage: data.stage,
             }
             return this.taskRepository.createTask(task);
         } catch (error) {

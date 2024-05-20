@@ -3,4 +3,5 @@ export interface ITaskEntity {
     userId: string;
     title: string;
     description: string;
+    stage: string;
 }

@@ -3,4 +3,5 @@ export type TTaskEntity = {
     userId: string;
     title: string;
     description: string;
+    stage: string;
 }

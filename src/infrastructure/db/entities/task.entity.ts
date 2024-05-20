@@ -19,6 +19,10 @@ export class TaskEntity {
     @IsNotEmpty()
     description: string;
 
+    @Column('varchar')
+    @IsNotEmpty()
+    stage: string;
+
     @ManyToOne(() => UserEntity, (user) => user.tasks)
     user: UserEntity;
 }
