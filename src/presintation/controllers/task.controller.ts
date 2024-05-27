@@ -33,6 +33,9 @@ export class TaskController {
       properties: {
         title: { type: 'string', default: 'fdbskjfbdf' },
         description: { type: 'string', default: 'fdjhsfbhjfb' },
+        stage: { type:'string', default: 'start' },
+        createdAt: { type: 'date', default: "" },
+        endDate: { type: 'date', default: "" },
       },
     },
   })
@@ -53,14 +56,16 @@ export class TaskController {
         title: { type: 'string' },
         description: { type: 'string' },
         stage: { type: 'string' },
+        createdAt: { type: 'date', default: "" },
+        endDate: { type: 'date', default: "" },
       },
     },
   })
   @ApiResponse({ status: 201, description: 'The task has been successfully created for the group.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
-  async createTaskForGroup(@Body() createTaskDto: { userId: string; groupId: string; title: string; description: string; stage: string }) {
-    const { userId, groupId, title, description, stage } = createTaskDto;
-    return this.taskService.createTaskForGroup(userId, groupId, title, description, stage);
+  async createTaskForGroup(@Body() createTaskDto: { userId: string; groupId: string; title: string; description: string; stage: string, createdAt: string | null, endDate: string | null }) {
+    const { userId, groupId, title, description, stage, createdAt, endDate } = createTaskDto;
+    return this.taskService.createTaskForGroup(userId, groupId, title, description, stage, createdAt, endDate);
   }
 
   @Get('get')

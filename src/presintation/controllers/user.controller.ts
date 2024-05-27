@@ -1,7 +1,9 @@
-import { Controller, Get, Inject, Param, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Inject, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { IUserService } from 'src/use-cases/user/interface/service/user.service.interface';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/infrastructure/JWT/guards/jwt.guard';
+import { Response } from 'express';
+import { UserId } from 'src/infrastructure/decorators/user-id.decorator';
 
 @Controller('user')
 @ApiTags('User')
@@ -13,8 +15,8 @@ export class UserController {
     private readonly userService: IUserService,
   ) {}
 
-  @Get('getUser/:id')
-  async findById(@Param('id') id: string) {
+  @Get('getUser')
+  async findById(@UserId() id: string) {
     const user = await this.userService.findById(id);
 
     return {

@@ -4,4 +4,6 @@ export interface ITaskEntity {
   title: string;
   description: string;
   stage: string;
+  createdAt: Date;
+  endDate: Date;
 }

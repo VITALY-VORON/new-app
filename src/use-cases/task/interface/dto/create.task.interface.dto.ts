@@ -4,4 +4,6 @@ export interface ICreateTaskDto {
   title: string;
   description: string;
   stage: string;
+  createdAt: string | null;
+  endDate: string | null;
 }

@@ -24,6 +24,14 @@ export class TaskEntity {
   @IsNotEmpty()
   stage: string;
 
+  @Column()
+  @IsNotEmpty()
+  createdAt: string | null;
+
+  @Column()
+  @IsNotEmpty()
+  endDate: string | null;
+
   @ManyToOne(() => UserEntity, (user) => user.tasks)
   user: UserEntity;
 
